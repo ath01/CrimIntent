@@ -1,25 +1,21 @@
 package pro.asfert.criminalintent;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.app.Fragment;
+
+import java.util.UUID;
 
 
-public class CrimeActivity extends ActionBarActivity {
+public class CrimeActivity extends SingleFragmentActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crime);
-        FragmentManager manager = getSupportFragmentManager();
-        Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
+    protected Fragment createFragment() {
+        UUID crimeId = (UUID) getIntent()
+                .getSerializableExtra(CrimeFragment.EXTRA_CRIME_ID);
 
-        if (fragment == null) {
-            fragment = new CrimeFragment();
-            manager.beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
-                    .commit();
-        }
+        return CrimeFragment.newInstance(crimeId);
     }
+
 }
